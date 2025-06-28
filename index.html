@@ -1,90 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Development Task 2</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced Styling and JavaScript</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <h1>Advanced JavaScript Projects</h1>
 
-    <header class="header">
-        <h1> Web Development Task 2</h1>
-        <nav class="navbar">
-            <a href="#contact-section">Contact</a>
-            <a href="#todo-section">To-Do List</a>
-            <a href="#about_us">About Us</a>
-            <a href="#service">Services</a>
-        </nav>
-    </header>
+  <div class="content-wrapper">
+    <section id="quiz-section">
+      <h2>Interactive Quiz</h2>
+      <p id="question"></p>
+      <div id="quiz-buttons">
+        <button onclick="checkAnswer(true)">True</button>
+        <button onclick="checkAnswer(false)">False</button>
+      </div>
+      <p id="feedback"></p>
+      <p>Score: <span id="score">0</span> / <span id="total-questions"></span></p>
+      <p>Note :- For Every correct answer your score will be +1</p>
+      <button id="restart-quiz-btn" style="display:none;" onclick="restartQuiz()">Restart Quiz</button>
+    </section>
 
-    <div class="main-content-area">
+    <section id="carousel-section">
+      <h2>Image Carousel</h2>
+      <img id="carousel-img" src="" alt="Carousel Image" />
+      <p id="image-caption"></p>
+      <br />
+      <button onclick="prevImage()">Previous</button>
+      <button onclick="nextImage()">Next</button>
+    </section>
 
-        <aside class="sidebar">
-            <h3>Quick Links</h3>
-            <ul>
-                <li><a href="#contact-section">Contact Form</a></li>
-                <li><a href="#todo-section">To-Do List</a></li>
-                <li><a href="https://www.official@apexplanet.in" target="_blank">More Info</a></li>
-                <li><a href="#learn_web-dev">Our Vision</a></li>
-                <li><a href="#not-now">Terms and Condition</a></li>
-            </ul>
-        </aside>
-
-        <main class="main-section">
-
-            <section id="contact-section" class="task-section">
-                <h2>Contact Us</h2>
-                <form id="contactForm">
-                    <div class="form-group">
-                        <label for="name">Name:</label>
-                        <input type="text" id="name" name="name" required>
-                        <div class="error-message" id="nameError"></div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" required>
-                        <div class="error-message" id="emailError"></div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="subject">Subject:</label>
-                        <input type="text" id="subject" name="subject" required>
-                        <div class="error-message" id="subjectError"></div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="message">Message:</label>
-                        <textarea id="message" name="message" rows="5" required></textarea>
-                        <div class="error-message" id="messageError"></div>
-                    </div>
-
-                    <button type="submit">Submit Message</button>
-                    <div class="success-message" id="formSuccess"></div>
-                </form>
-            </section>
-
-            <hr class="section-divider">
-
-            <section id="todo-section" class="task-section">
-                <h2>To-Do List</h2>
-                <div class="input-section">
-                    <input type="text" id="todoInput" placeholder="Add a new task...">
-                    <button id="addTodoBtn">Add Task</button>
-                </div>
-                <ul id="todoList">
-                    </ul>
-                <div id="todoMessage" class="todo-message"></div>
-            </section>
-
-        </main>
-    </div>
-
-    <footer class="footer">
-        <p style="color: rgb(255, 255, 255);">&copy; 2025 Learning Web Development. All rights reserved.</p>
-    </footer>
-
-    <script src="script.js"></script>
+    <section id="api-section">
+      <h2>Fetch a Joke</h2>
+      <button onclick="getJoke()">Get Joke</button>
+      <p id="joke-loading" style="display:none;">Loading joke...</p>
+      <p id="joke"></p>
+      <p id="joke-error" style="display:none; color: red;">Failed to fetch joke. Please try again.</p>
+    </section>
+  </div> <script src="script.js"></script>
 </body>
 </html>

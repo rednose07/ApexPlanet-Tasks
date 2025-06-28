@@ -1,141 +1,119 @@
-document.addEventListener('DOMContentLoaded', function() {
-   
-    const contactForm = document.getElementById('contactForm');
-    const nameInput = document.getElementById('name');
-    const emailInput = document.getElementById('email');
-    const subjectInput = document.getElementById('subject');
-    const messageInput = document.getElementById('message');
+const questionElement = document.getElementById("question");
+const feedbackElement = document.getElementById("feedback");
+const scoreElement = document.getElementById("score");
+const totalQuestionsElement = document.getElementById("total-questions");
+const quizButtonsDiv = document.getElementById("quiz-buttons");
+const restartQuizBtn = document.getElementById("restart-quiz-btn");
 
-    const nameError = document.getElementById('nameError');
-    const emailError = document.getElementById('emailError');
-    const subjectError = document.getElementById('subjectError');
-    const messageError = document.getElementById('messageError');
-    const formSuccess = document.getElementById('formSuccess');
+let currentQuestionIndex = 0;
+let score = 0;
 
-    function showError(element, message) {
-        element.textContent = message;
-        element.classList.add('show');
-        element.style.height = element.scrollHeight + 'px';
+const questions = [
+  { q: "The capital of France is Paris?", a: true },
+  { q: "Water boils at 100 degrees Celsius at sea level?", a: true },
+  { q: "The sun is a planet?", a: false },
+  { q: "HTML is a programming language?", a: false },
+  { q: "JavaScript is primarily used for styling web pages?", a: false }
+];
+
+totalQuestionsElement.textContent = questions.length;
+
+function loadQuestion() {
+  if (currentQuestionIndex < questions.length) {
+    questionElement.textContent = questions[currentQuestionIndex].q;
+    feedbackElement.textContent = "";
+    quizButtonsDiv.style.display = 'block';
+    restartQuizBtn.style.display = 'none'; 
+  } else {
+    questionElement.textContent = "Quiz complete! Your final score is " + score + " out of " + questions.length + ".";
+    feedbackElement.textContent = "";
+    quizButtonsDiv.style.display = 'none';
+    restartQuizBtn.style.display = 'block';
+  }
+}
+
+function checkAnswer(userAnswer) {
+  if (currentQuestionIndex < questions.length) {
+    const correctAnswer = questions[currentQuestionIndex].a;
+
+    if (userAnswer === correctAnswer) {
+      feedbackElement.textContent = "Correct!";
+      feedbackElement.className = "correct"; 
+      score++;
+    } else {
+      feedbackElement.textContent = "Incorrect. The correct answer was " + (correctAnswer ? "True" : "False") + ".";
+      feedbackElement.className = "incorrect";
     }
+    scoreElement.textContent = score; 
+    setTimeout(() => {
+      currentQuestionIndex++;
+      loadQuestion();
+    }, 1000); 
+  }
+}
 
-    function hideError(element) {
-        element.textContent = '';
-        element.classList.remove('show');
-        element.style.height = '0';
+function restartQuiz() {
+  currentQuestionIndex = 0;
+  score = 0;
+  scoreElement.textContent = score;
+  loadQuestion();
+}
+
+
+loadQuestion();
+
+
+const carouselImg = document.getElementById("carousel-img");
+const imageCaption = document.getElementById("image-caption");
+
+const images = [
+  { src: "https://hips.hearstapps.com/hmg-prod/images/living-room-2-left-663155189da31.jpg", caption: "Cozy living room interior." },
+  { src: "https://taleof2backpackers.com/wp-content/uploads/2021/08/Aru-Valley-Travel-Guide-1.jpg", caption: "A vibrant mountain landscape." },
+  { src: "https://static.vecteezy.com/system/resources/previews/027/381/151/large_2x/sunrise-silhouette-of-howrah-bridge-a-suspended-span-over-the-hooghly-river-in-west-bengal-free-photo.jpg", caption: "Calm lake at sunset." },
+  { src: "https://i.ytimg.com/vi/vsI_pKNcgeQ/maxresdefault.jpg", caption: "Busy city street at night." }
+];
+let currentImageIndex = 0;
+
+function showImage(index) {
+    carouselImg.src = images[index].src;
+    imageCaption.textContent = images[index].caption;
+}
+
+function nextImage() {
+  currentImageIndex = (currentImageIndex + 1) % images.length;
+  showImage(currentImageIndex);
+}
+
+function prevImage() {
+  currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+  showImage(currentImageIndex);
+}
+
+
+showImage(currentImageIndex);
+
+
+const jokeElement = document.getElementById("joke");
+const jokeLoadingElement = document.getElementById("joke-loading");
+const jokeErrorElement = document.getElementById("joke-error");
+
+async function getJoke() {
+  jokeElement.textContent = "";
+  jokeErrorElement.style.display = 'none'; 
+  jokeLoadingElement.style.display = 'block'; 
+
+  try {
+    const res = await fetch("https://official-joke-api.appspot.com/random_joke");
+    if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
     }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    contactForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        hideError(nameError);
-        hideError(emailError);
-        hideError(subjectError);
-        hideError(messageError);
-        formSuccess.textContent = '';
-
-        let isValid = true;
-
-        if (nameInput.value.trim() === '') {
-            showError(nameError, 'Name is required.');
-            isValid = false;
-        }
-
-        if (emailInput.value.trim() === '') {
-            showError(emailError, 'Email is required.');
-            isValid = false;
-        } else if (!emailRegex.test(emailInput.value.trim())) {
-            showError(emailError, 'Please enter a valid email address.');
-            isValid = false;
-        }
-
-        if (subjectInput.value.trim() === '') {
-            showError(subjectError, 'Subject is required.');
-            isValid = false;
-        }
-
-        if (messageInput.value.trim() === '') {
-            showError(messageError, 'Message is required.');
-            isValid = false;
-        }
-
-        if (isValid) {
-            formSuccess.textContent = 'Form submitted successfully!';
-            contactForm.reset();
-            console.log('Form data:', {
-                name: nameInput.value.trim(),
-                email: emailInput.value.trim(),
-                subject: subjectInput.value.trim(),
-                message: messageInput.value.trim()
-            });
-        }
-    });
-
-    
-    nameInput.addEventListener('input', () => { if (nameInput.value.trim() !== '') hideError(nameError); });
-    emailInput.addEventListener('input', () => {
-        if (emailInput.value.trim() !== '' && emailRegex.test(emailInput.value.trim())) hideError(emailError);
-    });
-    subjectInput.addEventListener('input', () => { if (subjectInput.value.trim() !== '') hideError(subjectError); });
-    messageInput.addEventListener('input', () => { if (messageInput.value.trim() !== '') hideError(messageError); });
-
-
-    const todoInput = document.getElementById('todoInput');
-    const addTodoBtn = document.getElementById('addTodoBtn');
-    const todoList = document.getElementById('todoList');
-    const todoMessage = document.getElementById('todoMessage');
-
-    function updateTodoMessage() {
-        if (todoList.children.length === 0) {
-            todoMessage.textContent = "No tasks yet! Add one above.";
-        } else {
-            todoMessage.textContent = "";
-        }
-    }
-
-    function addTask() {
-        const taskText = todoInput.value.trim();
-
-        if (taskText === '') {
-            alert('Please enter a task!');
-            return;
-        }
-
-        const listItem = document.createElement('li');
-
-        const taskSpan = document.createElement('span');
-        taskSpan.textContent = taskText;
-        taskSpan.addEventListener('click', function() {
-            listItem.classList.toggle('completed');
-        });
-
-        const deleteBtn = document.createElement('button');
-        deleteBtn.textContent = 'Delete';
-        deleteBtn.classList.add('delete-btn');
-        deleteBtn.addEventListener('click', function() {
-            todoList.removeChild(listItem);
-            updateTodoMessage();
-        });
-
-        listItem.appendChild(taskSpan);
-        listItem.appendChild(deleteBtn);
-
-        todoList.appendChild(listItem);
-
-        todoInput.value = '';
-        todoInput.focus();
-
-        updateTodoMessage();
-    }
-
-    addTodoBtn.addEventListener('click', addTask);
-
-    todoInput.addEventListener('keypress', function(event) {
-        if (event.key === 'Enter') {
-            addTask();
-        }
-    });
-
-    updateTodoMessage();
-});
+    const data = await res.json();
+    jokeElement.textContent = `${data.setup} - ${data.punchline}`;
+  } catch (error) {
+    console.error("Error fetching joke:", error);
+    jokeErrorElement.style.display = 'block'; 
+    jokeElement.textContent = " "; 
+  } finally {
+    jokeLoadingElement.style.display = 'none';
+  }
+}
