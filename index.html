@@ -1,30 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About Me</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Amazon Clone </title>
+ <link rel="stylesheet" href="style.css">
+ 
 </head>
 <body>
   <header>
-    <h1>My Portfolio</h1>
+    <a href="#" class="logo">AmazonIN</a>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search products...">
+      <button onclick="searchProducts()">Search</button>
+    </div>
     <nav>
-      <a href="index.html">About</a>
-      <a href="projects.html">Projects</a>
-      <a href="contact.html">Contact</a>
+      <a id="signin-link">Sign In</a>
+      <a id="user-display"></a>
+      <a id="orders-link">Orders</a>
+      <a id="cart-link">Cart 🛒 (<span id="cart-count">0</span>)</a>
     </nav>
   </header>
-
-  <main>
-    <section>
-      <h2>About Me</h2>
-      <p>Hello! I'm a web developer passionate about building responsive and user-friendly websites.</p>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 My Portfolio</p>
-  </footer>
+  <div id="response-message"></div>
+  <main id="product-list"></main>
+  <div id="cart-panel"><h2>Your Cart</h2><ul id="cart-items"></ul><p><strong>Total: ₹<span id="cart-total">0</span></strong></p><button class="btn" onclick="checkout()">Checkout</button></div>
+  <div id="orders-panel"><h2>Your Orders</h2><ul id="order-items"></ul></div>
+  <div id="signin-modal"><div id="signin-box"><h2>Sign In</h2><input type="text" id="username" placeholder="Username"><input type="password" id="password" placeholder="Password"><button onclick="signIn()">Sign In</button><button onclick="closeSignin()" style="background:#ccc;margin-top:0.5rem;">Cancel</button></div></div>
+  <footer>&copy; 2025 All rights reserved - For demo only.</footer>
+<script src="script.js"></script>
 </body>
 </html>
